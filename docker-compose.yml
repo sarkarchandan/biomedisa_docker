@@ -1,0 +1,45 @@
+version: '2.1'
+services:
+  biomedisa_database:
+    networks:
+      biomedisa_net:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'biomedisa_database'
+      MYSQL_USER: 'biomedisa'
+      MYSQL_PASSWORD: 'biomedisa_user_password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./data:/var/lib/mysql
+    command:
+      --wait_timeout=604800
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  biomedisa_frontend:
+    networks:
+      biomedisa_net:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    ports:
+      - '8888:8888'
+    depends_on:
+      biomedisa_database:
+        condition: service_healthy
+networks:
+  biomedisa_net:

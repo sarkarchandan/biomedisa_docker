@@ -1,0 +1,13 @@
+version: '3'
+services:
+  biomedisa_frontend:
+    build:
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: nvidia-smi
