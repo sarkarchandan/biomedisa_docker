@@ -1,5 +1,10 @@
 version: '2.1'
 services:
+  #  redis:
+  #    image: redis:alpine
+  #    ports:
+  #      - '6379:6379'
+  #    entrypoint: redis-server --appendonly yes
   biomedisa_database:
     networks:
       biomedisa_net:
@@ -23,6 +28,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+        #    depends_on:
+        #      - redis
   biomedisa_frontend:
     networks:
       biomedisa_net:
