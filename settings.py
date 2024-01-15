@@ -124,6 +124,8 @@ PARAVIEW_ROOT = os.path.join(BASE_DIR, 'biomedisa_app/paraview/')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'biomedisa_app/static')
 
+SECURE_SSL_REDIRECT = False
+
 # Email service
 EMAIL_USE_TLS = True
 EMAIL_HOST = config['SMTP_SEND_SERVER']

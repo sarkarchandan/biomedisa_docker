@@ -1,14 +1,14 @@
 FROM nvcr.io/nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 ENV MYSQL_ROOT_HOST=biomedisa_database
-#ENV REDIS_URL=redis://redis:6379
-#ENV REDIS_HOST=redis
-#ENV REDIS_PORT=6379
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-
 RUN apt-get update \
-	&& apt-get install -y ca-certificates python3 python3-dev python3-pip \
+	&& DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends software-properties-common \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3.8 python3.8-dev python3.8-distutils python3-pip 
+
+RUN apt-get install -y ca-certificates build-essential libssl-dev libffi-dev gnupg \
 	&& apt-get install -y libsm6 libxrender-dev libmysqlclient-dev pkg-config \
 	&& apt-get install -y libboost-python-dev build-essential screen \
 	&& apt-get install -y libssl-dev cmake openmpi-bin openmpi-doc \
@@ -16,11 +16,11 @@ RUN apt-get update \
 	&& apt-get install -y apache2 apache2-doc libapache2-mod-wsgi-py3
 
 RUN pip install --upgrade pip setuptools testresources scikit-build numpy \
-	&& pip install --upgrade scipy h5py colorama wget numpy-stl numba \
-	&& pip install --upgrade imagecodecs tifffile scikit-image opencv-python \
-	&& pip install --upgrade Pillow nibabel medpy SimpleITK mpi4py itk vtk rq \
-	&& pip install --upgrade mysqlclient matplotlib certifi \
-	&& pip install django==3.2.6
+	&& python3.8 -m pip install --upgrade scipy h5py colorama wget numpy-stl numba \
+	&& python3.8 -m pip install --upgrade imagecodecs tifffile scikit-image opencv-python \
+	&& python3.8 -m pip install --upgrade Pillow nibabel medpy SimpleITK mpi4py itk vtk rq \
+	&& python3.8 -m pip install --upgrade mysqlclient matplotlib certifi \
+	&& python3.8 -m pip install django==3.2.6
 
 RUN apt-get install --no-install-recommends libcudnn8=8.8.0.121-1+cuda11.8 \
 	&& apt-get install --no-install-recommends libcudnn8-dev=8.8.0.121-1+cuda11.8 \
