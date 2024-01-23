@@ -19,3 +19,19 @@ biomedisa frontend and the underlying MySQL database server.
 **NOTE**: We need to create a directory to host the database contents, which in
 this instance, we call *data*. This is not put into version control. Also, we
 need to think about the necessary settings and concerning networking and security.
+
+We also need to keep in mind to execute the container orchestration in the following
+manner.
+
+```bash
+$ docker-compose build --progress plain
+$ docker-compose up
+# And when not needed
+$ docker-compose down
+```
+
+This is recommended because with exhaustive testing we observed that the command
+`docker-compose up --build` not always working as expected.
+
+Moreover, to facilitate the CLI intrface a conveninent command line function
+needs to be devised.

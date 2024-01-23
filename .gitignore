@@ -56,4 +56,5 @@ tags
 .ionide
 
 data/
+test_data/
 # End of https://www.toptal.com/developers/gitignore/api/linux,vim,visualstudiocode
