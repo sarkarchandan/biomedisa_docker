@@ -36,6 +36,7 @@ services:
     restart: always
     build:
       dockerfile: Dockerfile
+    runtime: nvidia
     deploy:
       resources:
         reservations:
@@ -44,7 +45,9 @@ services:
               count: 1
               capabilities: [gpu]
     ports:
-      - '8888:8888'
+      - '9999:9999'
+    volumes:
+      - ./test_data:/mnt/data
     depends_on:
       biomedisa_database:
         condition: service_healthy
