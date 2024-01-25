@@ -75,6 +75,11 @@ if 'FILE_UPLOAD_TEMP_DIR' in config:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        # Following addition of HOST property is a side effect of the containerization.
+        # Since we are running MySQL database server not natively, rather as a separate
+        # container, we need to specify the name of the host container service as specified
+        # in the docker-compose.yml specification. Otherwise, app server has no way to
+        # to know where the database server is located.
         'HOST': 'biomedisa_database',
         'PORT': '3306',
         'NAME': 'biomedisa_database',

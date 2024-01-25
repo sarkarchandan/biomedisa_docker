@@ -4,9 +4,13 @@
 redis-server --daemonize yes
 # Start biomedisa processes
 python3 /home/biomedisa/manage.py migrate
+# Following super user creation would most likely have no
+# effect in this case because there is no TTY attached
+# to the container process.
 python3 /home/biomedisa/manage.py createsuperuser
-/home/biomedisa/start_workers.sh
-
+cd /home/biomedisa
+./start_workers.sh
+# TODO: Make sure that apache server is needed
 # Restart apache web server
 service apache2 restart
 # Run DJANGO server for the biomedisa app

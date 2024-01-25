@@ -1,8 +1,8 @@
 version: '3'
 services:
-  biomedisa_frontend:
-    build:
-      dockerfile: Dockerfile
+  nvidia_check:
+    image: nvcr.io/nvidia/cuda:11.8.0-devel-ubuntu22.04
+    runtime: nvidia
     deploy:
       resources:
         reservations:

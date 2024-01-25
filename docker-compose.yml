@@ -1,10 +1,5 @@
 version: '2.1'
 services:
-  #  redis:
-  #    image: redis:alpine
-  #    ports:
-  #      - '6379:6379'
-  #    entrypoint: redis-server --appendonly yes
   biomedisa_database:
     networks:
       biomedisa_net:
@@ -28,14 +23,14 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-        #    depends_on:
-        #      - redis
   biomedisa_frontend:
     networks:
       biomedisa_net:
     restart: always
     build:
       dockerfile: Dockerfile
+    # Following specification works for single GPU host. It
+    # needs to be adapted for a multi-GPU system.
     runtime: nvidia
     deploy:
       resources:
@@ -46,6 +41,8 @@ services:
               capabilities: [gpu]
     ports:
       - '9999:9999'
+    # Following volume mount is added to test the CLI utility.
+    # It can be removed if that's not desired.
     volumes:
       - ./test_data:/mnt/data
     depends_on:

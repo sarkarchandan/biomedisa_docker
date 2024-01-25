@@ -3,6 +3,9 @@ config = {
     'SERVER_ALIAS' : 'biomedisa-001', # an alias name for your server (for email notification and logfiles)
     'SECRET_KEY' : 'some_very_secret_key', # some random string
     'DJANGO_DATABASE' : 'biomedisa_user_password', # password of your mysql database
+    # NOTE: Using ['*'] for allowed host tells the Django server that all incoming connections should be served. This
+    # however is only recommended if we are operating inside a secure environment where network security is being
+    # administered at a higher level.
     'ALLOWED_HOSTS' : ['*'], # you must tell django explicitly which hosts are allowed (e.g. your IP and/or the URL of your homepage when running an APACHE server)
     'SECURE_MODE' : False, # this mode is highly recommended if you use biomedisa for production with users you do not trust
     'DEBUG' : True, # activate the debug mode if you develop the app. This must be deactivated in production mode for security reasons!

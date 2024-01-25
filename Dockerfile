@@ -1,11 +1,16 @@
 FROM nvcr.io/nvidia/cuda:11.8.0-devel-ubuntu22.04
 
+# Specify the host container for the MySQL database server
 ENV MYSQL_ROOT_HOST=biomedisa_database
+# Countermeasure to deal with ssl verification
+# TODO: Check if this can be removed
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+# Following environment variables are needed to make sure that
+# MPI processes can run as root inside the container.
+ENV OMPI_ALLOW_RUN_AS_ROOT=1
+ENV OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
 RUN apt-get update \
-#	&& DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends software-properties-common \
-##    && add-apt-repository -y ppa:deadsnakes/ppa \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3 python3-dev python3-distutils python3-pip 
 
 RUN apt-get install -y ca-certificates build-essential libssl-dev libffi-dev gnupg \
@@ -43,6 +48,8 @@ COPY config.py /home/biomedisa/biomedisa_app/
 
 COPY settings.py /home/biomedisa/biomedisa/
 
+# TODO: Check if apache web server is needed and if not essential
+# remove it.
 # Adapt apache web server configuration
 COPY 000-default.conf /etc/apache2/sites-available/
 
