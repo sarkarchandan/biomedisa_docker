@@ -34,6 +34,13 @@ $ docker-compose -f nvidia-test.yml up
 
 Following commands can be used to execute the biomedisa app.
 
+NOTE: To deploy biomedisa in a dedicated host server in the network it is
+important that we specify the FQDN in the `SERVER` configuration in the
+**config.py** file e.g., to deploy it in an arbitrary server called _server.ips.kit.edu_
+at port 9999 we need to provide `'SERVER' : 'http://server.ips.kit.edu:9999'`. This is
+important configuration to adapt to make sure that all functionalities are in working
+order.
+
 ```bash
 $ docker-compose build --progress plain
 $ docker-compose up
