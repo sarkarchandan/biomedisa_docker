@@ -1,4 +1,3 @@
-version: '2.1'
 services:
   biomedisa_database:
     networks:
@@ -37,14 +36,10 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+              count: all
+              capabilities: ["gpu"]
     ports:
       - '9999:9999'
-    # Following volume mount is added to test the CLI utility.
-    # It can be removed if that's not desired.
-    volumes:
-      - ./test_data:/mnt/data
     depends_on:
       biomedisa_database:
         condition: service_healthy
