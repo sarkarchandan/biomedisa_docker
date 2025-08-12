@@ -53,10 +53,10 @@ COPY settings.py /home/biomedisa/biomedisa/
 # Adapt apache web server configuration
 COPY 000-default.conf /etc/apache2/sites-available/
 
-#RUN chmod -R 750 /home/biomedisa \
+RUN chmod -R 750 /home/biomedisa \
 #	&& chmod -R 770 /home/biomedisa/private_storage \
-#	&& chmod -R 770 /home/biomedisa/media \
-#	&& chmod -R 770 /home/biomedisa/log \
-#	&& chmod -R 770 /home/biomedisa/tmp
+	&& chmod -R 770 /home/biomedisa/media \
+	&& chmod -R 770 /home/biomedisa/log \
+	&& chmod -R 770 /home/biomedisa/tmp
 
 ENTRYPOINT ["/home/biomedisa/entrypoint.sh"]
